@@ -1,0 +1,126 @@
+
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+header{
+    background-color: rgb(217, 224, 224);
+    width: 100%;
+    position: fixed;
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 200px;
+}
+button{
+  margin-top: 40px;
+  margin-bottom: 10px;
+background-color:white;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding:10px;
+}
+button:hover{
+  background-color: black;
+  color: white;
+  transition: .5s;
+  cursor: pointer;
+}
+.logo{
+    text-decoration: none;
+    color: navy;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.8em;
+}
+
+.navigation a{
+    color: navy;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1em;
+    padding-left: 30px;
+}
+.navigation a:hover{
+    color: indigo;     
+}
+
+section{
+    padding: 100px 200px;
+ }
+ 
+ .main{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: url(595415499.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+ }
+ 
+ .main h2{
+     color: white;
+     font-size: 1.4em;
+     font-weight: 700;
+ }
+ 
+ .main h2 span{
+     display: inline-block;
+     margin-top: 7px;
+     color: white;
+     font-size: 3em;
+     font-weight: 500;
+ }
+ 
+ 
+
+ .social-icons a {
+    color: white;
+    font-size: 1.1em;
+    padding-right: 20px;
+}
+
+.footer{
+    background-color: rgb(217, 224, 224);
+    color: rgb(177, 158, 211);
+    padding: 2em;
+    display: flex;
+    justify-content: space-between;
+}
+.main1{
+
+ margin: 2%;
+}
+
+.card{
+     width: 20%;
+     display: inline-block;
+     box-shadow: 2px 2px 20px cyan;
+     border-radius: 5px; 
+     margin: 2%;
+    }
+
+.image img{
+  width: 100%;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  
+
+ 
+ }
+.footer-title span{
+color: navy;
+}
+
+.footer.ocial-icons{
+    font-size: 1.3em;
+    background-color: rgb(177, 158, 211);
+    padding: 0 12px 0 0;
+}

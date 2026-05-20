@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="reser.css">
+
+    <title>Reservation</title>
+</head>
+<body>
+    <header>
+         <a href="a" class="logo">STAYINHOTELS</a>
+        <nav class="navigation">
+		<a href="index.html">Home</a>
+        </nav>
+    </header>
+
+    <section class="main">
+
+        
+
+
+<!-- ─── MAIN LAYOUT ────────────────────────────── -->
+<main class="res-container">
+
+  <!-- LEFT: Booking Form -->
+  <section class="booking-form-section">
+    <h2 class="section-title">Guest Details</h2>
+
+    <div class="form-group">
+      <label for="guestName">Full Name</label>
+      <input type="text" id="guestName" placeholder="e.g. Gana Abdo" />
+      <span class="error-msg" id="nameError"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="guestEmail">Email Address</label>
+      <input type="email" id="guestEmail" placeholder="e.g. Gana@email.com" />
+      <span class="error-msg" id="emailError"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="guestPhone">Phone Number</label>
+      <input type="tel" id="guestPhone" placeholder="e.g. +20 100 000 0000" />
+      <span class="error-msg" id="phoneError"></span>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="checkIn">Check-In Date</label>
+        <input type="date" id="checkIn" />
+        <span class="error-msg" id="checkInError"></span>
+      </div>
+      <div class="form-group">
+        <label for="checkOut">Check-Out Date</label>
+        <input type="date" id="checkOut" />
+        <span class="error-msg" id="checkOutError"></span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="guests">Number of Guests</label>
+        <select id="guests">
+          <option value="1">1 Guest</option>
+          <option value="2" selected>2 Guests</option>
+          <option value="3">3 Guests</option>
+          <option value="4">4 Guests</option>
+          <option value="5">5+ Guests</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="roomType">Room Type</label>
+        <select id="roomType" onchange="updateRoomSelection()">
+          <option value="">-- Select Room --</option>
+          <option value="single">Single Bed Room</option>
+          <option value="double">Double Bed Room</option>
+
+        </select>
+        <span class="error-msg" id="roomError"></span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="specialReq">Special Requests <span style="font-weight:400;color:#888">(optional)</span></label>
+      <textarea id="specialReq" rows="3" placeholder="e.g. late check-in, extra pillows, sea view..."></textarea>
+    </div>
+
+    <div class="form-group payment-group">
+      <label>Payment Method</label>
+      <div class="payment-options">
+        <label class="radio-option">
+          <input type="radio" name="payment" value="card" checked onchange="togglePayment()" />
+          <span>💳 Credit / Debit Card</span>
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="payment" value="paypal" onchange="togglePayment()" />
+          <span>🅿️ PayPal</span>
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="payment" value="cash" onchange="togglePayment()" />
+          <span>💵 Pay at Hotel</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Card Details (shown when card is selected) -->
+    <div id="cardDetails" class="card-details">
+      <div class="form-group">
+        <label for="cardNumber">Card Number</label>
+        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)" />
+        <span class="error-msg" id="cardError"></span>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cardExpiry">Expiry Date</label>
+          <input type="text" id="cardExpiry" placeholder="MM / YY" maxlength="7" oninput="formatExpiry(this)" />
+        </div>
+        <div class="form-group">
+          <label for="cardCvv">CVV</label>
+          <input type="text" id="cardCvv" placeholder="123" maxlength="3" />
+        </div>
+      </div>
+    </div>
+
+    <button class="confirm-btn" onclick="submitReservation()">
+      ✅ Confirm Reservation
+    </button>
+  </section>
+
+  <!-- RIGHT: Summary -->
+  <aside class="summary-sidebar">
+    <h2 class="section-title">Booking Summary</h2>
+
+    <!-- Room Preview Card -->
+    <div class="room-preview" id="roomPreview">
+      <div class="room-preview-icon" id="roomIcon">🏨</div>
+      <div class="room-preview-info">
+        <h3 id="roomName">No room selected</h3>
+        <p id="roomDesc">Please select a room type from the form.</p>
+        <span class="room-badge" id="roomBadge">–</span>
+      </div>
+    </div>
+
+    <!-- Date / Night summary -->
+    <div class="summary-dates" id="summaryDates" style="display:none">
+      <div class="date-row">
+        <span>📅 Check-In</span>
+        <strong id="summCheckIn">–</strong>
+      </div>
+      <div class="date-row">
+        <span>📅 Check-Out</span>
+        <strong id="summCheckOut">–</strong>
+      </div>
+      <div class="date-row">
+        <span>🌙 Nights</span>
+        <strong id="summNights">–</strong>
+      </div>
+      <div class="date-row">
+        <span>👤 Guests</span>
+        <strong id="summGuests">–</strong>
+      </div>
+    </div>
+
+    <!-- Price Breakdown -->
+    <div class="price-breakdown">
+      <div class="price-row">
+        <span id="priceLabel">Room rate</span>
+        <span id="pricePerNight">$9000 / night</span>
+      </div>
+      <div class="price-row">
+        <span>Nights</span>
+        <span id="nightsCount">× 0</span>
+      </div>
+      <div class="price-row">
+        <span>Subtotal</span>
+        <span id="subtotal">$0</span>
+      </div>
+      <div class="price-row">
+        <span>Taxes & Fees (10%)</span>
+        <span id="taxes">$0</span>
+      </div>
+      <div class="price-row total-row">
+        <span>Total</span>
+        <span id="grandTotal">$0</span>
+      </div>
+    </div>
+
+    <div class="policy-note">
+      <p>🔒 Free cancellation up to 48 hours before check-in.</p>
+      <p>📋 Booking confirmation will be sent to your email.</p>
+    </div>
+  </aside>
+
+</main>
+
+<!-- ─── SUCCESS MODAL ───────────────────────────── -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal-box">
+    <div class="modal-icon">🎉</div>
+    <h2>Booking Confirmed!</h2>
+    <p id="confirmationMsg">Your reservation has been successfully placed.</p>
+    <div class="modal-details" id="modalDetails"></div>
+    <button class="modal-btn" onclick="closeModal()">Back to Home</button>
+  </div>
+</div>
+
+    </section>
+    <footer class="footer">
+        <p class="footer-title">copyrights @<span>STAYINHOTELS</span></p>
+        <div class="social-icons">
+            <a href=""><i class="fa-brands fa-linkedin"></i></a>
+            <a href=""><i class="fa-brands fa-twitter"></i></a>
+            <a href=""><i class="fa-brands fa-facebook"></i></a>
+            <a href=""><i class="fa-brands fa-instagram"></i></a>
+            </div>
+    </footer>
